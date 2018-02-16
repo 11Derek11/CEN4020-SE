@@ -16,11 +16,11 @@ contract CoinFlip {
         require(owner == msg.sender);_;
     }
     
-    function CoinFlip () {
+    function CoinFlip () public {
         owner = msg.sender;
     }
     
-    function () payable isOwner {
+    function () payable isOwner public {
         sendStuff(msg.sender);
     }
     
@@ -56,6 +56,7 @@ contract CoinFlip {
     }
     
     //getter functions
+    //compiler warning: function state mutability can be restricted to view
     function getChoice () public returns (string) {
         return choice;
     }
