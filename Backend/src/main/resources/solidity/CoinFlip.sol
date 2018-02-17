@@ -3,29 +3,16 @@ pragma solidity ^0.4.0;
 //setchoice -> playcoinflip to receive result
 
 contract CoinFlip {
-
-    string choice = "heads";
     string result;
-    event sendStuff(address);
     address private owner;
     
-
-
-
     modifier isOwner {
         require(owner == msg.sender);_;
     }
     
-    function CoinFlip () public {
+    function CoinFlip () public payable {
         owner = msg.sender;
     }
-    
-    function () payable isOwner public {
-        sendStuff(msg.sender);
-    }
-    
-
-    
     
     //generates a number either 1 or 0
     //1 is designated heads
@@ -45,61 +32,25 @@ contract CoinFlip {
     }
     
     
-    
-    
-    
-    
     //select "heads" or "tails" for choice
-    function setChoice (string newChoice) public returns(string) {
+  /*  function setChoice (string newChoice) public returns(string) {
         choice = newChoice;
         return choice;
-    }
-    
-    //getter functions
-    //compiler warning: function state mutability can be restricted to view
-    function getChoice () public returns (string) {
-        return choice;
-    }
-    
-    function getResult () public returns (string) {
-        return result;
-    }
-    
-    function getBal () public returns (uint) {
-        return address(this).balance;
-    }
-    
-    
-    
-    
+    }*/
     
     //set choice before calling this, results in win or lose
     //result is decided automatically each play
-    function playCoinFlip () public returns (string) {
+    function playCoinFlip (string choice) public payable returns (string) {
         headsOrTails();
-        
         if(keccak256(result) == keccak256(choice)){
-            //receive funds here for winning
+            msg.sender.transfer(msg.value);
             return "you win!";
         }
         else {
-            //lose funds for losing
+            owner.transfer(msg.value);
             return "you lose";
-            
         }
     }
     
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
