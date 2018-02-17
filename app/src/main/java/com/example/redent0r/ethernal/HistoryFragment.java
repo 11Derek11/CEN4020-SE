@@ -11,6 +11,15 @@ import android.view.ViewGroup;
 
 public class HistoryFragment extends Fragment {
 
+    private static HistoryFragment instance = null;
+
+    public static HistoryFragment getInstance() {
+        if(instance == null) {
+            instance = new HistoryFragment();
+        }
+        return instance;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

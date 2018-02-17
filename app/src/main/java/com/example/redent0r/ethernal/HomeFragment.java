@@ -7,6 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class HomeFragment extends Fragment {
+
+    private static HomeFragment instance = null;
+
+    public static HomeFragment getInstance() {
+        if(instance == null) {
+            instance = new HomeFragment();
+        }
+        return instance;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
