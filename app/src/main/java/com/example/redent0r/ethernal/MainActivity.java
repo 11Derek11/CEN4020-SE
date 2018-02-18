@@ -17,15 +17,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
-        setUpBottomNav();
+        setUpBottomNav(bottomNavigationView);
 
         // initial fragment transaction. default = home
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.home_container, HomeFragment.getInstance()).commit();
     }
 
-    private void setUpBottomNav() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private void setUpBottomNav(BottomNavigationView bmv) {
+        bmv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -45,4 +45,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
