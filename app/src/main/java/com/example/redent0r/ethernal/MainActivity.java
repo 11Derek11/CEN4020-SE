@@ -1,6 +1,5 @@
 package com.example.redent0r.ethernal;
 
-import android.app.FragmentManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.home_container, SearchFragment.getInstance()).commit();
                         return true;
                     case R.id.action_history:
-                        fragmentManager.beginTransaction().replace(R.id.home_container, HistoryFragment.getInstance()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.home_container, new TransactionFragment()).commit();
                         return true;
                     default:
                         return false;
