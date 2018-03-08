@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +23,9 @@ import java.util.List;
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
     private static final String TAG = Transaction.class.getSimpleName();
+
+    NumberFormat currencyFormater = NumberFormat.getCurrencyInstance(); // for currency format
+    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
 
     public TransactionAdapter(@NonNull Context context, int resource, @NonNull List<Transaction> objects) {
         super(context, resource, objects);
@@ -36,11 +42,18 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         TextView tvTransactionId = view.findViewById(R.id.tvTransactionId);
 
+        TextView tvAmount = view.findViewById(R.id.tvAmount);
+
+        TextView tvTime = view.findViewById(R.id.tvTime);
+
         final Transaction transaction = getItem(position);
 
         Log.d(TAG, "getView: id: "+ transaction.getId());
 
         tvTransactionId.setText(transaction.getId());
+
+        tvAmount.setText(currencyFormater.format(transaction.getAmount()));
+        tvTime.setText(sdf.format(new Date(transaction.getTime())));
 
         return view;
     }

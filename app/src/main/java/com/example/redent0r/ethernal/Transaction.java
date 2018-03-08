@@ -9,14 +9,12 @@ public class Transaction {
     String id;
     Double amount;
     String winnerId;
-    String looserId;
     Long time;
 
-    public Transaction(String id, Double amount, String winnerId, String looserId, Long time) {
+    public Transaction(String id, Double amount, String winnerId, Long time) {
         this.id = id;
         this.amount = amount;
         this.winnerId = winnerId;
-        this.looserId = looserId;
         this.time = time;
     }
 
@@ -42,14 +40,6 @@ public class Transaction {
 
     public void setWinnerId(String winnerId) {
         this.winnerId = winnerId;
-    }
-
-    public String getLooserId() {
-        return looserId;
-    }
-
-    public void setLooserId(String looserId) {
-        this.looserId = looserId;
     }
 
     public Long getTime() {
