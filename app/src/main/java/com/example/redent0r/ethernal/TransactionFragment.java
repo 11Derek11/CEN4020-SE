@@ -38,7 +38,7 @@ public class TransactionFragment extends Fragment {
         lvHistory = (ListView) v.findViewById(R.id.lvHistory);
 
         for(int i = 0; i < 10; ++i) {
-            transactionList.add(new Transaction("a1", 5D, "w", "l", 100L));
+            transactionList.add(new Transaction(i + "", 5D, "w", "l", 1520543308L));
         }
 
         transactionAdapter = new TransactionAdapter(getContext(), R.layout.item_transaction, transactionList);
