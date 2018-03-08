@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * @author redent0r
+ *
+ */
 
 public class SearchFragment extends Fragment {
 

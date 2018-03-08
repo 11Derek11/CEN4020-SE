@@ -1,5 +1,9 @@
 package com.example.redent0r.ethernal;
 
+/**
+ * @author redent0r
+ *
+ */
 
 public class Transaction {
     String id;

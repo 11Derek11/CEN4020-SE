@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+/**
+ * @author redent0r
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;

@@ -14,6 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * @author redent0r
+ *
+ */
 
 public class TransactionFragment extends Fragment {
 

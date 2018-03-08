@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * @author redent0r
+ *
+ */
 
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
