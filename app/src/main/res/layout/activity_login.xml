@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:tools = "http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height = "match_parent" android:paddingLeft= "0dp"
+    android:paddingRight = "0dp"
+    android:paddingTop = "0dp"
+    android:paddingBottom = "0dp" tools:context = ".MainActivity">
+
+    <TextView android:text = "Login" android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        android:id = "@+id/textview"
+        android:textSize = "35dp"
+        android:layout_alignParentTop = "true"
+        android:layout_centerHorizontal = "true" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="46dp"
+        android:focusable="true"
+        android:hint="Enter Name"
+        android:textColorHighlight="#ff7eff15"
+        android:textColorHint="@android:color/background_dark" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/editText"
+        android:layout_below="@+id/editText"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColorHint="@android:color/background_dark" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/textview"
+        android:layout_toStartOf="@+id/textview" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textview"
+        android:layout_toEndOf="@+id/textview" />
+
+</RelativeLayout>
