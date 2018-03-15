@@ -32,16 +32,20 @@ public class TransactionFragment extends Fragment {
 
         lvHistory = (ListView) v.findViewById(R.id.lvHistory);
 
-        for(int i = 0; i < 10; ++i) {
-            String id = new String(i + "");
-            transactionList.add(
-                    new Transaction(id, 5D, "w", 1520543308L));
-        }
+        testLvHistory();
 
         transactionAdapter = new TransactionAdapter(getContext(), R.layout.item_transaction, transactionList);
 
         lvHistory.setAdapter(transactionAdapter);
 
         return v;
+    }
+
+    private void testLvHistory() {
+        for(int i = 0; i < 10; ++i) {
+            String id = new String(i + "");
+            transactionList.add(
+                    new Transaction(id, 5D, "w", 1520543308L));
+        }
     }
 }

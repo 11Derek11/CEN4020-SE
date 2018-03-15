@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.home_container, HomeFragment.getInstance()).commit();
                         return true;
                     case R.id.action_search:
-                        fragmentManager.beginTransaction().replace(R.id.home_container, SearchFragment.getInstance()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.home_container, new SearchFragment()).commit();
                         return true;
                     case R.id.action_history:
                         fragmentManager.beginTransaction().replace(R.id.home_container, new TransactionFragment()).commit();
