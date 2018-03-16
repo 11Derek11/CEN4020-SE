@@ -32,7 +32,7 @@ public class Application
 		System.out.println("Client is running version: " + clientVersion.getWeb3ClientVersion());
 	    }
 
-	Credentials credentials = WalletUtils.loadCredentials("sapha582", "/home/shak/.ethereum/rinkeby/keystore/UTC--2018-02-15T03-29-56.001144798Z--f8ef3cd122bedb0648d18ab224601ead6eec2fab");
+	Credentials credentials = WalletUtils.loadCredentials("", "/home/shak/.ethereum/rinkeby/keystore/UTC--2018-02-15T03-29-56.001144798Z--f8ef3cd122bedb0648d18ab224601ead6eec2fab");
 	System.out.println("credentials loades");
 	TransactionReceipt transactionReciept = Transfer.sendFunds(web3, credentials, "0x428a3dc11f986e11f003c4251c6a7305ab0d5894", BigDecimal.valueOf(1.0), Convert.Unit.ETHER).send();
     }
