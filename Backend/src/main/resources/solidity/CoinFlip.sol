@@ -3,18 +3,22 @@ pragma solidity ^0.4.0;
 // playcoinflip to receive result
 
 contract CoinFlip {
+    uint private requiredBet;
+    uint public deposit;
     string result;
     address private owner;
     
-    modifier isOwner {
-        require(owner == msg.sender);_;
-    }
-    
-    function CoinFlip () public payable {
+    function CoinFlip (uint bet) public payable {
+        requiredBet = bet;
         owner = msg.sender;
+        if( msg.value != requiredBet)
+            selfdestruct(owner);
+        else
+            deposit = msg.value;
     }
     
     event resultInfo(string message, address user, uint value);
+    event fail(string message);
     
     //generates a number either 1 or 0
     //1 is designated heads
@@ -33,32 +37,22 @@ contract CoinFlip {
         return result;
     }
     
-    
-    //select "heads" or "tails" for choice
-  /*  function setChoice (string newChoice) public returns(string) {
-        choice = newChoice;
-        return choice;
-    }*/
-    
-    //set choice before calling this, results in win or lose
     //result is decided automatically each play
     function playCoinFlip (string choice) public payable {
-        headsOrTails();
-        if(keccak256(result) == keccak256(choice)){
-            resultInfo("you won!!!",msg.sender,msg.value*2);
-            msg.sender.transfer(msg.value*2);
-            
+        if(msg.value != requiredBet) {
+            emit fail("Not enough ether sent!");
         }
         else {
-            resultInfo("you lose!!!",msg.sender,msg.value);
-            //owner.transfer(msg.value);
-            
+            headsOrTails();
+            if(keccak256(result) == keccak256(choice)){
+                emit resultInfo("you won!!!",msg.sender,msg.value+deposit);
+                msg.sender.transfer(msg.value + deposit);
+            }
+            else {
+                emit resultInfo("you lose!!!",msg.sender,msg.value+deposit);
+                owner.transfer(msg.value + deposit);
+            }
+            selfdestruct(owner);
         }
     }
-    
-    function kill() private isOwner {
-        resultInfo("contract no longer in use",msg.sender, this.balance);
-        selfdestruct(owner);
-    }
-
 }
