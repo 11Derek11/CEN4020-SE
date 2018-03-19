@@ -1,15 +1,16 @@
+//David Scher-Arazi and Andrew Keller
+
 pragma solidity ^0.4.0;
 
 // playcoinflip to receive result
 
 contract CoinFlip {
-    uint private requiredBet;
     string result;
     address private owner;
     
     function CoinFlip () public payable {
         owner = msg.sender;
-        requiredBet = msg.value;
+        this.balance = msg.value;
     }
     
     event resultInfo(string message, address user, uint value);
@@ -32,22 +33,28 @@ contract CoinFlip {
         return result;
     }
     
+    function deleteContract() public {
+        if(msg.sender != owner)
+            emit fail("You must be the original contract owner to remove it from the blockchain!");
+        else
+            selfdestruct(owner);
+    }
+    
     //result is decided automatically each play
     function playCoinFlip (string choice) public payable {
         address me = this;
-        if(msg.value > me.balance ){
-            emit fail("too much ether sent!");
+        if(msg.value < me.balance ){
+            emit fail("not enough wei sent!");
             msg.sender.transfer(msg.value);
         } else {
             headsOrTails();
             if(keccak256(result) == keccak256(choice)){
-                emit resultInfo("you won!!!",msg.sender,msg.value+requiredBet);
-                msg.sender.transfer(msg.value *2);
+                emit resultInfo("you won!!!",msg.sender,msg.value+me.balance);
+                msg.sender.transfer(msg.value+ me.balance);
             }
             else {
-                emit resultInfo("you lose!!!",msg.sender,msg.value+requiredBet);
+                emit resultInfo("you lose!!!",msg.sender,msg.value+me.balance);
             }
-            //selfdestruct(owner);
         }
     }
 }
