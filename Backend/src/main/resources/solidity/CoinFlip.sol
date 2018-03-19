@@ -4,17 +4,12 @@ pragma solidity ^0.4.0;
 
 contract CoinFlip {
     uint private requiredBet;
-    uint public deposit;
     string result;
     address private owner;
     
-    function CoinFlip (uint bet) public payable {
-        requiredBet = bet;
+    function CoinFlip () public payable {
         owner = msg.sender;
-        if( msg.value != requiredBet)
-            selfdestruct(owner);
-        else
-            deposit = msg.value;
+        requiredBet = msg.value;
     }
     
     event resultInfo(string message, address user, uint value);
@@ -39,18 +34,19 @@ contract CoinFlip {
     
     //result is decided automatically each play
     function playCoinFlip (string choice) public payable {
-        if(msg.value != requiredBet) {
+        if(msg.value < requiredBet) {
             emit fail("Not enough ether sent!");
+            msg.sender.transfer(msg.value);
         }
         else {
             headsOrTails();
             if(keccak256(result) == keccak256(choice)){
-                emit resultInfo("you won!!!",msg.sender,msg.value+deposit);
-                msg.sender.transfer(msg.value + deposit);
+                emit resultInfo("you won!!!",msg.sender,msg.value+requiredBet);
+                msg.sender.transfer(msg.value + requiredBet);
             }
             else {
-                emit resultInfo("you lose!!!",msg.sender,msg.value+deposit);
-                owner.transfer(msg.value + deposit);
+                emit resultInfo("you lose!!!",msg.sender,msg.value+requiredBet);
+                owner.transfer(msg.value + requiredBet);
             }
             selfdestruct(owner);
         }
