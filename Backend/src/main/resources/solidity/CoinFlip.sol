@@ -44,7 +44,7 @@ contract CoinFlip {
         return result;
     }
     
-    function deleteContract() public {
+    function cashOut() public {
         if(msg.sender != owner)
             emit fail("You must be the original contract owner to remove it from the blockchain!");
         else
