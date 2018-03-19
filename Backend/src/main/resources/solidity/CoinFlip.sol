@@ -15,6 +15,17 @@ contract CoinFlip {
     
     event resultInfo(string message, address user, uint value);
     event fail(string message);
+    event Deposit(address indexed _from, uint _value);
+    
+    function deposit() public payable
+    {
+        if(msg.sender != owner)
+        {
+            emit fail("Only the owner can deposit coin");
+        } else {
+            emit Deposit(msg.sender, msg.value);
+        }
+    }
     
     //generates a number either 1 or 0
     //1 is designated heads
