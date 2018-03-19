@@ -1,8 +1,6 @@
 //David Scher-Arazi and Andrew Keller
 pragma solidity ^0.4.0;
 
-// playcoinflip to receive result
-
 contract CoinFlip {
     uint private requiredBet;
     string result;
@@ -33,9 +31,9 @@ contract CoinFlip {
         return result;
     }
     
-    //result is decided automatically each play
+    //result is decided automatically, self destructs and sends the remaining balance to the owner.
     function playCoinFlip (string choice) public payable {
-        if(msg.value < requiredBet) {
+        if(msg.value < requiredBet) { //player must at least bet what the owner did
             emit fail("Not enough ether sent!");
             msg.sender.transfer(msg.value);
         }
