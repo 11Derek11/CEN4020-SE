@@ -17,7 +17,7 @@ contract CoinFlip {
     
     //generates a number either 1 or 0
     //1 is designated heads
-    function headsOrTails () public returns(string) {
+    function headsOrTails () private returns(string) {
        
         uint number = block.timestamp % 2;
         
@@ -34,21 +34,20 @@ contract CoinFlip {
     
     //result is decided automatically each play
     function playCoinFlip (string choice) public payable {
-        if(msg.value < requiredBet) {
-            emit fail("Not enough ether sent!");
+        address me = this;
+        if(msg.value > me.balance ){
+            emit fail("too much ether sent!");
             msg.sender.transfer(msg.value);
-        }
-        else {
+        } else {
             headsOrTails();
             if(keccak256(result) == keccak256(choice)){
                 emit resultInfo("you won!!!",msg.sender,msg.value+requiredBet);
-                msg.sender.transfer(msg.value + requiredBet);
+                msg.sender.transfer(msg.value *2);
             }
             else {
                 emit resultInfo("you lose!!!",msg.sender,msg.value+requiredBet);
-                owner.transfer(msg.value + requiredBet);
             }
-            selfdestruct(owner);
+            //selfdestruct(owner);
         }
     }
 }
