@@ -22,7 +22,7 @@ import java.util.List;
 
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
-    private static final String TAG = Transaction.class.getSimpleName();
+    private static final String TAG = TransactionAdapter.class.getSimpleName();
 
     NumberFormat currencyFormater = NumberFormat.getCurrencyInstance(); // for currency format
     SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
