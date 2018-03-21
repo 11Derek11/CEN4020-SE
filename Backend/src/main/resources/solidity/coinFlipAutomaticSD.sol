@@ -3,7 +3,6 @@ pragma solidity ^0.4.0;
 
 contract CoinFlip {
     uint private requiredBet;
-    string result;
     address private owner;
     
     function CoinFlip () public payable {
@@ -38,8 +37,7 @@ contract CoinFlip {
             msg.sender.transfer(msg.value);
         }
         else {
-            headsOrTails();
-            if(keccak256(result) == keccak256(choice)){
+            if(keccak256(headsOrTails()) == keccak256(choice)){
                 emit resultInfo("you won!!!",msg.sender,msg.value+requiredBet);
                 msg.sender.transfer(msg.value + requiredBet);
             }
