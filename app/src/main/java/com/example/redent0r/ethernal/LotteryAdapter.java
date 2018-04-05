@@ -20,14 +20,14 @@ import java.util.List;
  *
  */
 
-public class TransactionAdapter extends ArrayAdapter<Transaction> {
+public class LotteryAdapter extends ArrayAdapter<Lottery> {
 
-    private static final String TAG = TransactionAdapter.class.getSimpleName();
+    private static final String TAG = LotteryAdapter.class.getSimpleName();
 
     NumberFormat currencyFormater = NumberFormat.getCurrencyInstance(); // for currency format
     SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
 
-    public TransactionAdapter(@NonNull Context context, int resource, @NonNull List<Transaction> objects) {
+    public LotteryAdapter(@NonNull Context context, int resource, @NonNull List<Lottery> objects) {
         super(context, resource, objects);
     }
 
@@ -38,7 +38,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
 
         if (view == null)
-            view = LayoutInflater.from(getContext()).inflate(R.layout.item_transaction, parent, false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.item_lottery, parent, false);
 
         TextView tvTransactionId = view.findViewById(R.id.tvTransactionId);
 
@@ -46,14 +46,18 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         TextView tvTime = view.findViewById(R.id.tvTime);
 
-        final Transaction transaction = getItem(position);
+        TextView tvCompleted = view.findViewById(R.id.tvCompleted);
 
-        Log.d(TAG, "getView: id: "+ transaction.getId());
+        final Lottery lottery = getItem(position);
 
-        tvTransactionId.setText(transaction.getId());
+        Log.d(TAG, "getView: id: "+ lottery.getId());
 
-        tvAmount.setText(currencyFormater.format(transaction.getAmount()));
-        tvTime.setText(sdf.format(new Date(transaction.getTime())));
+        tvTransactionId.setText(lottery.getId());
+
+        tvAmount.setText(currencyFormater.format(lottery.getEntryAmount()));
+        tvTime.setText(sdf.format(new Date(lottery.getTime())));
+
+        tvCompleted.setText(lottery.getCompleted() + "");
 
         return view;
     }

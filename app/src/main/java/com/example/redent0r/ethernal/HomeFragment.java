@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
-    private static HomeFragment instance = null;
-
     TextView tvAddress1;
     TextView tvAddress2;
 
@@ -28,13 +26,6 @@ public class HomeFragment extends Fragment {
     EditText etInput;
 
     GreetingClient greetingClient;
-
-    public static HomeFragment getInstance() {
-        if(instance == null) {
-            instance = new HomeFragment();
-        }
-        return instance;
-    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

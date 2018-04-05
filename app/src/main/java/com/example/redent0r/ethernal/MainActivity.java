@@ -1,13 +1,10 @@
 package com.example.redent0r.ethernal;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-
-import java.io.IOException;
 
 /**
  * @author redent0r
@@ -17,7 +14,9 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    HomeFragment homeFragment = HomeFragment.getInstance();
+    HomeFragment homeFragment = new HomeFragment();
+    SearchFragment searchFragment = new SearchFragment();
+    LotteryFragment lotteryFragment = new LotteryFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         // initial fragment transaction. default = home
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.home_container, HomeFragment.getInstance()).commit();
-
-
-        /*
-        try {
-            Thread greetingServer = new GreetingServer(this);
-            greetingServer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
+        fragmentManager.beginTransaction().add(R.id.home_container, lotteryFragment).commit();
     }
 
     private void setUpBottomNav(BottomNavigationView bmv) {
@@ -49,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        fragmentManager.beginTransaction().replace(R.id.home_container, homeFragment).commit();
+                        //fragmentManager.beginTransaction().replace(R.id.home_container, homeFragment).commit();
                         return true;
                     case R.id.action_search:
-                        fragmentManager.beginTransaction().replace(R.id.home_container, new SearchFragment()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.home_container, searchFragment).commit();
                         return true;
                     case R.id.action_history:
-                        fragmentManager.beginTransaction().replace(R.id.home_container, new TransactionFragment()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.home_container, lotteryFragment).commit();
                         return true;
                     default:
                         return false;
