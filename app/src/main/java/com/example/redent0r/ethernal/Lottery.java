@@ -6,18 +6,24 @@ package com.example.redent0r.ethernal;
  */
 
 public class Lottery {
-    String id;
-    Double entryAmount;
-    String winnerId;
-    Boolean completed;
-    Long time;
+    private String id;
+    private Double entryAmount;
+    private String ownerId;
+    private Integer maxParticipants;
+    private Boolean completed;
+    private Long time;
 
-    public Lottery(String id, Double entryAmount, String winnerId, Boolean completed, Long time) {
+    public Lottery(String id, Double entryAmount, String ownerId, Integer maxParticipants, Boolean completed, Long time) {
         this.id = id;
         this.entryAmount = entryAmount;
-        this.winnerId = winnerId;
+        this.ownerId = ownerId;
+        this.maxParticipants = maxParticipants;
         this.completed = completed;
         this.time = time;
+    }
+
+    public Integer getMaxParticipants() {
+        return maxParticipants;
     }
 
     public String getId() {
@@ -28,8 +34,8 @@ public class Lottery {
         return entryAmount;
     }
 
-    public String getWinnerId() {
-        return winnerId;
+    public String getOwnerId() {
+        return ownerId;
     }
 
     public Long getTime() {

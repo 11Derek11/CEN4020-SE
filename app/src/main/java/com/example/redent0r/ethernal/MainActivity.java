@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
     public  static final String KEY_USER_ID = TAG + ".KEY_USER_ID";
     public static String userId;
 
+    public static final String serverUrl = "http://159.65.161.113:5000";
+    public static final String serverUrlLogin = serverUrl + "/login";
+    public static final String serverUrlRegister = serverUrl + "/register";
+    public static final String serverUrlStartLottery = serverUrl + "/startlottery";
+    public static final String serverUrlPlayLottery = serverUrl + "/playlottery";
+    public static final String serverUrlRefresh = serverUrl + "/getcontracts";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

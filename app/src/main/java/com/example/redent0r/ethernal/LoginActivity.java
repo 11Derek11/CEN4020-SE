@@ -23,18 +23,19 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnRegister;
     EditText etUserName, etPassword;
-
-    private static final String serverUrl = "http://159.65.161.113:6000";
-    private static final String serverUrlLogin = serverUrl + "/login";
-    private static final String serverUrlRegister = serverUrl + "/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        CookieHandler.setDefault(new CookieManager());
 
         btnLogin = (Button)findViewById(R.id.btnLogin);
         etUserName = (EditText)findViewById(R.id.etUserName);
@@ -60,11 +61,10 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    JsonRequest jsonRequest = new JsonObjectRequest(serverUrlLogin, jsonObject,
+                    JsonRequest jsonRequest = new JsonObjectRequest(MainActivity.serverUrlLogin, jsonObject,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-
                                         if (response.has("success")) {
                                             try {
                                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                JsonRequest jsonRequest = new JsonObjectRequest(serverUrlRegister, jsonObject,
+                JsonRequest jsonRequest = new JsonObjectRequest(MainActivity.serverUrlRegister, jsonObject,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {

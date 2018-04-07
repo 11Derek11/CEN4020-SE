@@ -26,7 +26,7 @@ public class LotteryAdapter extends ArrayAdapter<Lottery> {
     private static final String TAG = LotteryAdapter.class.getSimpleName();
 
     NumberFormat currencyFormater = NumberFormat.getCurrencyInstance(); // for currency format
-    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
+    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 
     public LotteryAdapter(@NonNull Context context, int resource, @NonNull List<Lottery> objects) {
         super(context, resource, objects);
@@ -47,6 +47,8 @@ public class LotteryAdapter extends ArrayAdapter<Lottery> {
 
         TextView tvCompleted = view.findViewById(R.id.tvCompleted);
 
+        TextView tvMaxParticipants = view.findViewById(R.id.tvMaxParticipants);
+
         final Lottery lottery = getItem(position);
 
         Log.d(TAG, "getView: id: "+ lottery.getId());
@@ -55,6 +57,8 @@ public class LotteryAdapter extends ArrayAdapter<Lottery> {
 
         tvAmount.setText(currencyFormater.format(lottery.getEntryAmount()));
         tvTime.setText(sdf.format(new Date(lottery.getTime())));
+
+        tvMaxParticipants.setText(lottery.getMaxParticipants() + "");
 
         tvCompleted.setText(lottery.getCompleted() + "");
 
