@@ -12,14 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".NewLottery"
+            android:label="New Lottery"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity android:name=".LoginActivity"
+            android:label="Login"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewLottery"
-            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

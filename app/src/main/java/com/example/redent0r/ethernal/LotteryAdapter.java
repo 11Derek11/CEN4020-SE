@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -30,8 +31,6 @@ public class LotteryAdapter extends ArrayAdapter<Lottery> {
     public LotteryAdapter(@NonNull Context context, int resource, @NonNull List<Lottery> objects) {
         super(context, resource, objects);
     }
-
-
 
     @NonNull
     @Override

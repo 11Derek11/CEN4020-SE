@@ -1,10 +1,6 @@
 package com.example.redent0r.ethernal;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,12 +17,12 @@ class GreetingClient extends Thread {
     private static final String TAG = GreetingClient.class.getSimpleName();
     String serverName = "159.65.161.113";
     int portNumber = 3000;
-    HomeFragment homeFragment;
+    LotteryFragment lotteryFragment;
     PrintWriter pwrite;
 
-    GreetingClient(HomeFragment homeFragment) {
+    GreetingClient(LotteryFragment lotteryFragment) {
         super();
-        this.homeFragment = homeFragment;
+        this.lotteryFragment = lotteryFragment;
     }
 
     void sendMessageToServer(String message) {
@@ -58,11 +54,11 @@ class GreetingClient extends Thread {
                 if ((receiveMessage = receiveRead.readLine()) != null) //receive from server
                 {
                     final String messageToDisplay = receiveMessage;
-                    homeFragment.getActivity().
+                    lotteryFragment.getActivity().
                             runOnUiThread(new Runnable() {
                                               @Override
                                               public void run() {
-                                                  homeFragment.tvStatus.setText(messageToDisplay);
+                                                  //lotteryFragment.tvStatus.setText(messageToDisplay);
                                               }
                                           }
                             );

@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        greetingClient = new GreetingClient(this);
+        //greetingClient = new GreetingClient(this);
 
         return v;
     }

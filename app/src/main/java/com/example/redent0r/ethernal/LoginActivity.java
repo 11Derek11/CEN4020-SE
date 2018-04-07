@@ -2,64 +2,120 @@ package com.example.redent0r.ethernal;
 
 /**
  * Created by Derek on 3/8/2018.
+ * All mistakes were introduced by Saul
  */
+
 import android.support.v7.app.AppCompatActivity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-    Button b1,b2;
-    EditText ed1,ed2;
+    Button btnLogin, btnRegister;
+    EditText etUserName, etPassword;
 
-    TextView tx1;
-    int counter = 3;
+    private static final String serverUrl = "http://159.65.161.113:6000";
+    private static final String serverUrlLogin = serverUrl + "/login";
+    private static final String serverUrlRegister = serverUrl + "/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        b1 = (Button)findViewById(R.id.button);
-        ed1 = (EditText)findViewById(R.id.editText);
-        ed2 = (EditText)findViewById(R.id.editText2);
+        btnLogin = (Button)findViewById(R.id.btnLogin);
+        etUserName = (EditText)findViewById(R.id.etUserName);
+        etPassword = (EditText)findViewById(R.id.etPassword);
+        btnRegister = (Button)findViewById(R.id.btnRegister);
 
-        b2 = (Button)findViewById(R.id.button2);
-      
-
-        b1.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ed1.getText().toString().equals("admin") &&
-                        ed2.getText().toString().equals("admin")) {
+                if(etUserName.getText().toString().equals("") &&
+                        etPassword.getText().toString().equals("")) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra(MainActivity.KEY_USER_ID, "0x123456789");
                     startActivity(intent);
-                }else{
-                    Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-
-                    tx1.setVisibility(View.VISIBLE);
-                    tx1.setBackgroundColor(Color.RED);
-                    counter--;
-                    tx1.setText(Integer.toString(counter));
-
-                    if (counter == 0) {
-                        b1.setEnabled(false);
+                    finish();
+                }
+                else {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("username", etUserName.getText().toString());
+                        jsonObject.put("password", etPassword.getText().toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
+                    JsonRequest jsonRequest = new JsonObjectRequest(serverUrlLogin, jsonObject,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+
+                                        if (response.has("success")) {
+                                            try {
+                                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                intent.putExtra(MainActivity.KEY_USER_ID, response.getString("success"));
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                            catch (JSONException e) {e.printStackTrace();}
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_LONG).show();
+                                        }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+                    Volley.newRequestQueue(getApplicationContext()).add(jsonRequest);
                 }
             }
         });
 
-        b2.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("username", etUserName.getText().toString());
+                    jsonObject.put("password", etPassword.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JsonRequest jsonRequest = new JsonObjectRequest(serverUrlRegister, jsonObject,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                    if (response.has("success")) {
+                                        Toast.makeText(getApplicationContext(), "You have been succesfully registered", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "There was an error registering you", Toast.LENGTH_LONG).show();
+                                    }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                Volley.newRequestQueue(getApplicationContext()).add(jsonRequest);
             }
         });
     }
