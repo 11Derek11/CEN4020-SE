@@ -46,6 +46,8 @@ public class LotteryFragment extends Fragment {
 
     List<Lottery> lotteryList = new ArrayList<>();
 
+    public static final String KEY_LOTTERY_ID = TAG + ".KEY_LOTTERY_ID";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,24 +83,34 @@ public class LotteryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final Lottery lottery = (Lottery) adapterView.getItemAtPosition(i);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity().getApplicationContext());
-                alertDialogBuilder.setTitle("Join Lottery");
-                alertDialogBuilder.setMessage("Do you want to join this lottery?");
-                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        joinLottery(lottery.getId());
-                    }
-                });
-                alertDialogBuilder.show();
+                String lotteryAddress = lottery.getId();
+                Intent intent = new Intent(getActivity().getApplicationContext(), LotterySummary.class);
+                intent.putExtra(KEY_LOTTERY_ID, lotteryAddress);
+                startActivity(intent);
             }
         });
+    }
+
+    private void joinLotteryConfirm() {
+        /*
+        final Lottery lottery = (Lottery) adapterView.getItemAtPosition(i);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity().getApplicationContext());
+        alertDialogBuilder.setTitle("Join Lottery");
+        alertDialogBuilder.setMessage("Do you want to join this lottery?");
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                joinLottery(lottery.getId());
+            }
+        });
+        alertDialogBuilder.show();
+        */
     }
 
     private void joinLottery(String lotteryId) {

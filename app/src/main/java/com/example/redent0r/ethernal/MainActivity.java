@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String serverUrlStartLottery = serverUrl + "/startlottery";
     public static final String serverUrlPlayLottery = serverUrl + "/playlottery";
     public static final String serverUrlRefresh = serverUrl + "/getcontracts";
+    public static final String serverUrlGetUserContracts = serverUrl + "/getusercontracts";
 
 
     @Override
