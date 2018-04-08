@@ -60,7 +60,8 @@ public class LotteryAdapter extends ArrayAdapter<Lottery> {
 
         tvMaxParticipants.setText(lottery.getMaxParticipants() + "");
 
-        tvCompleted.setText(lottery.getCompleted() + "");
+        if(lottery.getCompleted()) tvCompleted.setText("Completed");
+        else tvCompleted.setText("Not completed");
 
         return view;
     }

@@ -7,6 +7,7 @@ package com.example.redent0r.ethernal;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 
@@ -30,12 +31,16 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnRegister;
     EditText etUserName, etPassword;
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         CookieHandler.setDefault(new CookieManager());
+
+        Log.d(TAG, "onCreate: "+ CookieHandler.getDefault());
 
         btnLogin = (Button)findViewById(R.id.btnLogin);
         etUserName = (EditText)findViewById(R.id.etUserName);
