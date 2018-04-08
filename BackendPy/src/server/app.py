@@ -71,11 +71,29 @@ def getUserContracts():
 
     response = {}
     for x in query:
-        response[x.id] = [x.user, x.contract, x.winner]
+        query2 = s.query(User).filter_by(wallet=x.user).first()
+        response[x.id] = [query2.username, x.user, x.contract, x.winner]
 
     return jsonify(response)
 
+@app.route('/getprofile', methods=['GET'])
+def getProfile():
+    Session = sessionmaker(bind=engine)
+    s = Session()
 
+    if (not 'wallet' in session):
+        return jsonify({'error' : 'user not logged in'})
+
+    query = s.query(UserContracts).filter_by(user=session['wallet']).all()
+
+    if not query:
+        return jsonify({'empty' : 'lmao'})
+
+    response = {}
+    for x in query:
+        response[x.id] = [x.user, x.contract, x.winner]
+
+    return jsonify(response)
 
 @app.route('/getcontracts', methods=['GET'])
 def getContracts():
@@ -89,7 +107,7 @@ def getContracts():
 
     response = {}
     for x in query:
-        response[x.id] = [x.owner, x.contract, x.initialBet, x.players, x.date]
+        response[x.id] = [x.owner, x.contract, x.initialBet, x.players, x.date, x.completed]
 
     return jsonify(response)
 
@@ -191,7 +209,7 @@ def playLottery():
         data = retVal['logs'][0]['data']
     except IndexError:
         print(retVal)
-        return jsonify({'error' : 'There has been a problem with the blockchain.'})
+        return jsonify({'error' : 'This contract has already been completed.'})
 
 
     dataStr = str(codecs.decode(data[2:], 'hex'))
@@ -208,6 +226,9 @@ def playLottery():
     if 'true' in dataStr:
         querys = s.query(UserContracts).filter_by(user=address, contract=json['contract']).first()
         querys.winner = True
+        s.commit()
+        queryd = s.query(Contracts).filter_by(contract=json['contract']).first()
+        queryd.completed = True
         s.commit()
 
 
@@ -284,39 +305,10 @@ def do_registration():
     s.commit()
 
     psn.unlockAccount(w3.eth.accounts[0], 'sapha582')
-    sendCoin = w3.eth.sendTransaction({'from' : w3.eth.accounts[0], 'to' : wallet, 'value' : w3.toWei('1', 'ether')})
+    sendCoin = w3.eth.sendTransaction({'from' : w3.eth.accounts[0], 'to' : wallet, 'value' : w3.toWei('2', 'ether')})
     psn.lockAccount(w3.eth.accounts[0])
 
     return jsonify({'success' : 'You successfully added a user', 'wallet' : wallet})
-
-
-# POST
-@app.route('/login', methods=['POST'])
-def get_text_prediction():
-    """
-    predicts requested text whether it is ham or spam
-    :return: json
-    """
-    json = request.get_json()
-    print(json)
-
-    Session = sessionmaker(bind=engine)
-    s = Session()
-
-
-    try:
-        salt = s.query(User).filter(User.username.in_([json['username']])).first().salt
-    except AttributeError:
-        return jsonify({'unsuccessfull' : 'Too unsalty'})
-
-    query = s.query(User).filter(User.username.in_([json['username']]), User.password.in_([hashlib.sha512((json['password'] + salt).encode()).hexdigest()]))
-    result = query.first()
- 
-    if result:
-        session['wallet'] = result.wallet
-        return jsonify({'success': result.wallet})
-
-    return jsonify({'unsuccessfull':'lamo'})
 
 
 @app.route("/logout", methods=['POST'])
@@ -325,7 +317,6 @@ def logout():
     session.pop('wallet', None)
     return jsonify({'success' : 'You successfully logged out'}) 
 
-# running web app in local machine
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     #app.config['SESSION_TYPE'] = 'filesystem'
