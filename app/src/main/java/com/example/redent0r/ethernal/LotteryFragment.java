@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -91,8 +92,9 @@ public class LotteryFragment extends Fragment {
         });
     }
 
+    /*
     private void joinLotteryConfirm() {
-        /*
+
         final Lottery lottery = (Lottery) adapterView.getItemAtPosition(i);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity().getApplicationContext());
         alertDialogBuilder.setTitle("Join Lottery");
@@ -110,8 +112,11 @@ public class LotteryFragment extends Fragment {
             }
         });
         alertDialogBuilder.show();
-        */
+
     }
+
+
+
 
     private void joinLottery(String lotteryId) {
         JSONObject jsonObject = new JSONObject();
@@ -139,6 +144,7 @@ public class LotteryFragment extends Fragment {
         });
         Volley.newRequestQueue(getActivity().getApplicationContext()).add(jsonRequest);
     }
+    */
 
     private void refresh() {
 

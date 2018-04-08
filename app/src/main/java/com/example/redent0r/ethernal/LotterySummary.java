@@ -45,8 +45,6 @@ public class LotterySummary extends AppCompatActivity {
                                 tvWinnerId.setText(winnerId);
                             }
                             catch (JSONException e) {e.printStackTrace();}
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {

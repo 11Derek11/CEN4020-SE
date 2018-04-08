@@ -59,13 +59,14 @@ public class MainActivity extends AppCompatActivity {
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 switch (item.getItemId()) {
                     case R.id.action_home:
+                        fragmentManager.beginTransaction().replace(R.id.home_container, lotteryFragment).commit();
                         //fragmentManager.beginTransaction().replace(R.id.home_container, lotteryFragment).commit();
                         return true;
                     case R.id.action_search:
                         fragmentManager.beginTransaction().replace(R.id.home_container, searchFragment).commit();
                         return true;
                     case R.id.action_history:
-                        fragmentManager.beginTransaction().replace(R.id.home_container, lotteryFragment).commit();
+
                         return true;
                     default:
                         return false;
