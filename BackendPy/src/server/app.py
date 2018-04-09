@@ -56,6 +56,26 @@ contract_address = '0xA4FD29131bB40cd8a3BF527886D05EF90350447b'
 
 
 
+@app.route('/withdraw', methods=['POST'])
+def withdraw():
+    json = request.get_json()
+    print(json)
+
+    Session = sessionmaker(bind=engine)
+    s = Session()   
+
+    if (not 'address' in json) or (not 'amount' in json) or (not 'wallet' in session):
+        return jsonify({'error' : 'user not logged in, or wrong input'})
+
+
+    query = s.query(User).filter_by(wallet=session['wallet']).first()
+    psn.unlockAccount(session['wallet'], query.password)
+    sendCoin = w3.eth.sendTransaction({'from' : session['wallet'], 'to' : json['address'], 'value' : w3.toWei(json['amount'], 'ether')})
+    psn.lockAccount(session['wallet'])
+
+    return jsonify({'success' : 'You have send some money.'})
+
+
 @app.route('/getusercontracts', methods=['POST'])
 def getUserContracts():
     json = request.get_json()
@@ -309,6 +329,30 @@ def do_registration():
     psn.lockAccount(w3.eth.accounts[0])
 
     return jsonify({'success' : 'You successfully added a user', 'wallet' : wallet})
+
+@app.route('/login', methods=['POST'])
+def login():
+    json = request.get_json()
+    print(json)
+
+    Session = sessionmaker(bind=engine)
+    s = Session()
+
+
+    try:
+        salt = s.query(User).filter(User.username.in_([json['username']])).first().salt
+    except AttributeError:
+        return jsonify({'unsuccessfull' : 'Too unsalty'})
+
+    query = s.query(User).filter(User.username.in_([json['username']]), User.password.in_([hashlib.sha512((json['password'] + salt).encode()).hexdigest()]))
+    result = query.first()
+ 
+    if result:
+        session['wallet'] = result.wallet
+        return jsonify({'success': result.wallet})
+
+    return jsonify({'unsuccessfull':'lamo'})
+
 
 
 @app.route("/logout", methods=['POST'])
