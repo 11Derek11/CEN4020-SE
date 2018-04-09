@@ -70,6 +70,10 @@ def withdraw():
 
     query = s.query(User).filter_by(wallet=session['wallet']).first()
     psn.unlockAccount(session['wallet'], query.password)
+
+    if float(json['amount']) > w3.fromWei(w3.eth.getBalance(session['wallet']), 'ether'):
+        return jsonify({'error' : 'you dont have enough money'})
+
     sendCoin = w3.eth.sendTransaction({'from' : session['wallet'], 'to' : json['address'], 'value' : w3.toWei(json['amount'], 'ether')})
     psn.lockAccount(session['wallet'])
 
@@ -160,6 +164,9 @@ def deployLottery():
 
     psn.unlockAccount(session['wallet'], query.password)
 
+    if float(json['bet']) > w3.fromWei(w3.eth.getBalance(session['wallet']), 'ether'):
+        return jsonify({'error' : 'you dont have enough money'})
+
     primes = [i for i in range(int(json['players']), int(json['players']) + 1000) if isPrime(i)]
     tx_hash = randomContract.deploy(transaction={'from': session['wallet']}, args=(int(json['players']), random.choice(primes), w3.toWei(json['bet'], 'ether')))
 
@@ -207,10 +214,14 @@ def playLottery():
     if  (not 'contract' in json) or (not 'wallet' in session):
         return jsonify({'error' : 'Wrong input or you have not logged in.'})
 
+
     query = s.query(User).filter_by(wallet=session['wallet']).first()
     query2 = s.query(Contracts).filter_by(contract=json['contract']).first()
 
     psn.unlockAccount(session['wallet'], query.password)
+
+    if float(query2.initialBet) > w3.fromWei(w3.eth.getBalance(session['wallet']), 'ether'):
+        return jsonify({'error' : 'you dont have enough money'})
 
     instance = w3.eth.contract(json['contract'], abi=random_interface['abi'])
     handle = instance.transact({'from':session['wallet'], 'value' : w3.toWei(str(query2.initialBet), 'ether')})
@@ -269,7 +280,6 @@ def playcoinflip():
 
     psn = web3.personal.Personal(w3)
     psn.unlockAccount(session['wallet'], json['password'])
-    #psn.unlockAccount(w3.eth.accounts[0], 'sapha582')
     abi = contract_interface['abi']
 
     contract_instance = w3.eth.contract(contract_address, abi=abi)
