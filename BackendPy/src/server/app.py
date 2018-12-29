@@ -47,7 +47,7 @@ compiled_sol = compile_source(coinflip)
 contract_interface = compiled_sol['<stdin>:CoinFlip']
 
 psn = web3.personal.Personal(w3)
-#psn.unlockAccount(w3.eth.accounts[0], 'sapha582')
+#psn.unlockAccount(w3.eth.accounts[0], '')
 
 randomContract = w3.eth.contract(abi=random_interface['abi'], bytecode=random_interface['bin'])
 contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
